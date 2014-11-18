@@ -155,27 +155,17 @@ public class CenterControllerImpl extends UnicastRemoteObject implements CenterC
                     continue;
                 } else {
                     CenterController client = clients.get(key).getClient();
-                    //test doan nay xem co anh huong gi den bien client ko. 
-                    //co bi de doi tuong ko.
-                    //chua khoi tao xong server da kich hoat xong loop
-                    //putClientQueue loi null.
-                    //Thread thread = new Thread() {
-                        
-                    //    @Override
-                    //    public void run() {
-                            try {
+
+                    try {
                                 
-                                client.bcconfigureContent(backgroundName, 
-                                                characterName, numberCha);
+                        client.bcconfigureContent(backgroundName, 
+                                        characterName, numberCha);
                                 
-                            } catch (RemoteException ex) {
-                                Logger.getLogger(CenterControllerImpl.class.getName())
+                    } catch (RemoteException ex) {
+                        Logger.getLogger(CenterControllerImpl.class.getName())
                                         .log(Level.SEVERE, null, ex);
-                            }
-                    //    }
-                        
-                    //};
-                    //thread.start();
+                    }
+
                 }
             }
         }
@@ -200,13 +190,6 @@ public class CenterControllerImpl extends UnicastRemoteObject implements CenterC
     @Override
     public boolean start() throws RemoteException {
         System.out.println("Start loop");
-        //phai check dieu kien khoi tao cua cac client moi start
-//        try {
-//            Thread.sleep(2000);
-//        } catch (InterruptedException ex) {
-//            Logger.getLogger(CenterControllerImpl.class.getName())
-//                    .log(Level.SEVERE, null, ex);
-//        }
         synchronized(clients) {
             for (String key : clients.keySet()) {
                 if (clients.get(key).isIsAdmin()) {
@@ -232,7 +215,6 @@ public class CenterControllerImpl extends UnicastRemoteObject implements CenterC
         }
         this.state = SESSION_RUNNING;
         
-        //kich hoat vong lap tren server
         Thread tRunLoop = new Thread() {
 
             @Override
@@ -271,6 +253,7 @@ public class CenterControllerImpl extends UnicastRemoteObject implements CenterC
             //chuyen vao queue
             queueForClient = distributeCharater(allCharacter);
             synchronized(clients) {
+                //chi check dieu kien de nhan du lieu o thoi diem nay thoi
                 for (String key : clients.keySet()) {
                     System.out.println("Queue for " + key);
                     try {
@@ -557,6 +540,11 @@ public class CenterControllerImpl extends UnicastRemoteObject implements CenterC
 
     @Override
     public void sendReady(boolean isReady) throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void signOut(String id) throws RemoteException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

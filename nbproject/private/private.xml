@@ -3,8 +3,9 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/hoangdat/NetBeansProjects/ScreenSServer/src/rmiscreensaver/CenterControllerImpl.java</file>
-            <file>file:/home/hoangdat/NetBeansProjects/ScreenSServer/src/rmiscreensaver/CenterController.java</file>
+            <file>file:/home/hoangdat/NetBeansProjects/ScreenSServer/src/rmiscreensaver/ContentMessage.java</file>
+            <file>file:/home/hoangdat/NetBeansProjects/ScreenSServer/src/rmiscreensaver/RegisterMessage.java</file>
+            <file>file:/home/hoangdat/NetBeansProjects/ScreenSServer/src/rmiscreensaver/ClientInfo.java</file>
         </group>
     </open-files>
 </project-private>
