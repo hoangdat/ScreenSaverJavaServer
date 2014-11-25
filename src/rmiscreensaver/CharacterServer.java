@@ -243,11 +243,11 @@ public class CharacterServer {
         int state = generateRandom(1, 2);
         
         if (state == 1) {
-            speedX = generateRandom(20, 40);
-            speedY = generateRandom(10, 20);
+            speedX = generateRandom(40, 60);
+            speedY = generateRandom(20, 40);
         } else {
-            speedX = -generateRandom(20, 40);
-            speedY = -generateRandom(10, 20);
+            speedX = -generateRandom(40, 60);
+            speedY = -generateRandom(20, 40);
         }
          
         if (speedX > 0) isLeft = true;
