@@ -25,8 +25,9 @@ public class CenterControllerImpl extends UnicastRemoteObject implements CenterC
     public static final int   SESSION_RUNNING     = 1;
     public static final long secInNanosec        = 1000000000L;
     public static final long milisecInNanosec    = 1000000L;
+    public static int CHARACTER_WIDTH_FOR_CALC = 60;
 
-    private static final int  FPS = 40;
+    private static final int  FPS = 10;
     private static final long UPDATE_PERIOD = secInNanosec / FPS;
     
     private String bgNameChoosed;
@@ -145,6 +146,16 @@ public class CenterControllerImpl extends UnicastRemoteObject implements CenterC
         bgNameChoosed = backgroundName;
         chNameChoosed = characterName;
         chCount = numberCha;
+        int iMode = 1;
+        
+        if (chNameChoosed.contains("ball")) {
+            iMode = 1;
+        } else if (chNameChoosed.contains("super")) {
+            iMode = 4;
+        } else if (chNameChoosed.contains("space")) {
+            iMode = 2;
+        }
+        
         
         System.out.println(backgroundName + "\n" 
                          + characterName);
@@ -169,11 +180,36 @@ public class CenterControllerImpl extends UnicastRemoteObject implements CenterC
                 }
             }
         }
-        InitalizeContent();
-        for (int i = 0; i < chCount; i++) {
-            String chID = genCharaterID(i);
-            CharacterServer ch = new CharacterServer(chID, i * 10, i * 5, 60, 80);
-            allCharacter.add(ch);//debug doan nay xem sao
+//        InitalizeContent();
+//        for (int i = 0; i < chCount; i++) {
+//            String chID = genCharaterID(i);
+//            CharacterServer ch = new CharacterServer(chID, i * 10, i * 5, 60, 80);
+//            allCharacter.add(ch);//debug doan nay xem sao
+//        }
+        if (iMode == 1) {
+            InitalizeContent();
+            for (int i = 0; i < chCount; i++) {
+                String chID = genCharaterID(i);
+                CharacterServer ch = new CharacterServer(chID, i * 10, i * 5, 60, 60);
+                allCharacter.add(ch);//debug doan nay xem sao
+                CHARACTER_WIDTH_FOR_CALC = 60;
+            }
+        } else if (iMode == 2) {
+            InitalizeContent();
+            for (int i = 0; i < chCount; i++) {
+                String chID = genCharaterID(i);
+                CharacterServer ch = new CharacterServer(chID, i * 10, i * 5, 80, 60);
+                allCharacter.add(ch);//debug doan nay xem sao
+                CHARACTER_WIDTH_FOR_CALC = 80;
+            }
+        } else if (iMode == 4) {
+            InitalizeContent();
+            for (int i = 0; i < chCount; i++) {
+                String chID = genCharaterID(i);
+                CharacterServer ch = new CharacterServer(chID, i * 10, i * 5, 60, 80);
+                allCharacter.add(ch);//debug doan nay xem sao
+                CHARACTER_WIDTH_FOR_CALC = 60;
+            }
         }
     }
     
@@ -533,7 +569,7 @@ public class CenterControllerImpl extends UnicastRemoteObject implements CenterC
     private static float calculateXrelativeNext(float remain) {
         float xResult;
         
-        xResult = 0 - 60 + remain;
+        xResult = 0 - CHARACTER_WIDTH_FOR_CALC + remain;
         
         return xResult;
     }

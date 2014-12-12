@@ -113,13 +113,26 @@ public class CharacterMessage implements Serializable{
         this.y = y;
     }
 
-    public CharacterMessage(String id, String clientID, float x, float y, boolean isUp, boolean isLeft) {
+    public CharacterMessage(String id, String clientID, float x, float y, 
+                                            boolean isUp, boolean isLeft) {
         this.id = id;
         this.clientID = clientID;
         this.x = x;
         this.y = y;
         this.isUp = isUp;
         this.isLeft = isLeft;
+    }
+    
+    public CharacterMessage(String id, String clientID, float x, float y, 
+                             boolean isUp, boolean isLeft, float speedX, float speedY) {
+        this.id = id;
+        this.clientID = clientID;
+        this.x = x;
+        this.y = y;
+        this.isUp = isUp;
+        this.isLeft = isLeft;
+        this.speedX = speedX;
+        this.speedY = speedY;
     }
 
     public CharacterMessage() {

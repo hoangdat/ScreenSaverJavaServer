@@ -158,9 +158,9 @@ public class CharacterServer {
             if (x < (widthSvr - characterWidth)) {
                 if ((x < (edgeLeftCL - characterWidth)) 
                       && (edgeLeftCL <= widthSvr)) {
-                    
+                    System.out.println("x truoc: "+ x);
                     x += speedX * deltaS;
-                    
+                    System.out.println("x sau: " + x + " toc do: "+ speedX + " deltaS: " + deltaS);
                 } else if ((x < (edgeLeftCL - characterWidth))
                         && (edgeLeftCL > widthSvr)) {
                     System.err.println("Truong hop dac biet, neu vao la sai");
