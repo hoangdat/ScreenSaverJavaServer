@@ -42,8 +42,8 @@ public class CenterControllerImpl extends UnicastRemoteObject implements CenterC
     
     public static HashMap<String, ClientInfo> clients = new HashMap<String, ClientInfo>();
     public static LinkedList<String> orderIDClient = new LinkedList<String>();
-    public static HashMap<String, ClientInfo> clientsRegister = new HashMap<String, ClientInfo>();
-    public static LinkedList<String> orderIDClientRegister = new LinkedList<String>();
+    //public static HashMap<String, ClientInfo> clientsRegister = new HashMap<String, ClientInfo>();
+    //public static LinkedList<String> orderIDClientRegister = new LinkedList<String>();
     
     
     public HashMap<String, ArrayList<CharacterMessage>> queueForClient;
@@ -295,12 +295,12 @@ public class CenterControllerImpl extends UnicastRemoteObject implements CenterC
                     try {
                         ArrayList<CharacterMessage> chsToqueue = queueForClient.get(key);
                         //co the null o day                       
-                        if (chsToqueue.size() > 0) {
-                            for (int i = 0; i < chsToqueue.size(); i++) {
-                                System.out.println("la " + chsToqueue.get(i).getId() + 
-                                        " ClientID la: " + chsToqueue.get(i).getClientID());
-                            }
-                        }
+//                        if (chsToqueue.size() > 0) {
+//                            for (int i = 0; i < chsToqueue.size(); i++) {
+//                                System.out.println("la " + chsToqueue.get(i).getId() + 
+//                                        " ClientID la: " + chsToqueue.get(i).getClientID());
+//                            }
+//                        }
                         clients.get(key).getClient().putClientQueue(chsToqueue);
                     } catch (RemoteException ex) {
                         Logger.getLogger(CenterControllerImpl.class.getName())
@@ -501,10 +501,7 @@ public class CenterControllerImpl extends UnicastRemoteObject implements CenterC
             CharacterServer chTemp = arr.get(i);
             float xRelative = convertXrelative(chTemp.getX());
             ArrayList<CharacterMessage> clLst = hResult.get(chTemp.getClientID());
-//            //khong ton tai cai clientID do == clLst null
-//            if (clLst == null) {
-//                continue;
-//            }
+
             //chuyen nhan vat voi toa do = tuong doi
             
             CharacterMessage chMes = new CharacterMessage(chTemp.getId(), 
@@ -515,6 +512,7 @@ public class CenterControllerImpl extends UnicastRemoteObject implements CenterC
                                                           chTemp.isIsLeft());
             
             ArrayList<CharacterMessage> lstToQueue = hResult.get(chTemp.getClientID());
+            if (lstToQueue == null) continue;
             lstToQueue.add(chMes);
             
             if ((chTemp.getRemainInClient() < chTemp.getCharacterWidth()) && 
@@ -578,9 +576,30 @@ public class CenterControllerImpl extends UnicastRemoteObject implements CenterC
     public void sendReady(boolean isReady) throws RemoteException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    public static boolean ClientIsOnline(String id){
+        boolean isOnline = false;
+        synchronized(orderIDClient) {
+            for (String key : orderIDClient) {
+                if (key.equals(id)) {
+                    isOnline = true;
+                }
+            }
+        }
+        return isOnline;
+    }
 
     @Override
     public void signOut(String id) throws RemoteException {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        synchronized(orderIDClient) {
+            System.out.println("size orderIDClient before: " + orderIDClient.size());
+            orderIDClient.remove(id);
+            System.out.println("size orderIDClient after: " + orderIDClient.size());
+            synchronized(clients) {
+                System.out.println("size clients before: " + clients.size());
+                clients.remove(id);
+                System.out.println("size clients after: " + clients.size());
+            }
+        }
     }
 }

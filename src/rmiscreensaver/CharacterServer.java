@@ -150,6 +150,10 @@ public class CharacterServer {
         int edgeLeftCL = clCenter.getEdgeLeftinSV();
         int edgeRightCL = clCenter.getEdgeRightinSV();
         
+        if (!CenterControllerImpl.ClientIsOnline(clCenter.getId())) {
+            return;
+        }
+        
         Tunnel[] tunnels = CenterControllerImpl.calculateTuneForClient(clCenter.getId());
         int tunnelWidthLeft = tunnels[1].getWidth();
         int tunnelWidthRight = tunnels[0].getWidth();
